@@ -74,7 +74,9 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": [],
+            "scripts": [
+             // "C:/shubh/study/PluralSight/UdemyApp-ASPNETCoreWeb-API-EntityFramework-Core-Angular-from-scratch/DatingApp/DatingApp-SPA/node_modules/alertifyjs/build/alertify.min.js"
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"
