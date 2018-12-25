@@ -15,8 +15,11 @@ export class NavComponent implements OnInit {
 
   model: any = {};
   logged: boolean;
+  photoUrl: string ;
+
   // time: any = new Observable(observer =>setInterval(() => observer.next(new Date().toDateString()), 1000)).subscribe();
   ngOnInit() {
+    this.authservice.currentPhotoUrl.subscribe(photoUrlfrmAuthService => this.photoUrl = photoUrlfrmAuthService);
   }
 
   login(): void {
@@ -29,12 +32,19 @@ export class NavComponent implements OnInit {
       );
      }
 
+    //  login(): void {
+    //   this.authservice.login(this.model);
+    //  }
+
        loggedIn() {
         this.logged = this.authservice.loggedIn();
     }
 
     logout() {
       localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      this.authservice.decodedToken = null;
+      this.authservice.currentUser = null ;
            this.alertify.message('logged out');
            this.router.navigate(['/home']);
     }
