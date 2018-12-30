@@ -63,6 +63,7 @@ public async Task<IActionResult> AddPhotoForUser(int userId ,[FromForm]PhotoForC
           var user = await _repo.GetUser(userId);
 
           var file= photoForCreation.File ;
+          
 
           var uploadResult =new ImageUploadResult();
         //    if (file ==null)
