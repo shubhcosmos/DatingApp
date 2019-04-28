@@ -30,6 +30,8 @@ import { PhotoEditComponent } from './members/photo-edit/photo-edit.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import {TimeAgoPipe} from 'time-ago-pipe';
 import { ListsResolver } from './_resolvers/lists.resolver';
+import { MessagesResolver } from './_resolvers/messages.resolver';
+import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
 // import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
 export function tokenGetter() {
@@ -50,6 +52,7 @@ return localStorage.getItem('token');
       MemberDetailComponent,
       PhotoEditComponent,
       TimeAgoPipe,
+      MemberMessagesComponent
 
    ],
    imports: [
@@ -83,7 +86,8 @@ return localStorage.getItem('token');
       MemberListResolver,
       MemberEditResolver,
       PreventUnsavedChanges,
-      ListsResolver
+      ListsResolver,
+      MessagesResolver
    ],
    bootstrap: [
       AppComponent

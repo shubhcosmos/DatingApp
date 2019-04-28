@@ -33,6 +33,7 @@ namespace DatingApp.API.Controllers
             var currentUserID = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value) ;
 
             var userFromRepo = await repo.GetUser(currentUserID) ; 
+            
 
             userParams.UserId = currentUserID ; 
 

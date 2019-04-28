@@ -33,5 +33,7 @@ warning(message: string) {
 }
 message(message: string) {
   alertify.message(message);
+
 }
+
 }

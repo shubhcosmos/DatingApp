@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from 'src/app/_models/user';
 import { UserService } from 'src/app/_services/user.service';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 import { ActivatedRoute } from '@angular/router';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
+import { TabsetComponent } from 'ngx-bootstrap';
 
 
 @Component({
@@ -13,6 +14,7 @@ import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gal
 })
 export class MemberDetailComponent implements OnInit {
 
+@ViewChild('memberTabs') memberTabs: TabsetComponent ;
   user: User;
   galOpts: NgxGalleryOptions[];
   galImgs: NgxGalleryImage[];
@@ -21,9 +23,11 @@ export class MemberDetailComponent implements OnInit {
 
 
   ngOnInit(): void {
+this.selecttabqueryparam();
     this.actroute.data.subscribe((data) => {
       this.user = data['user'];
     } ) ;
+
     this.galOpts  = [
       {
       width: '500px',
@@ -35,7 +39,9 @@ export class MemberDetailComponent implements OnInit {
       }
     ];
     this.galImgs = this.getImages();
+
   }
+
 
 getImages() {
 
@@ -54,6 +60,18 @@ getImages() {
   }
 
   return imageUrls;
+}
+
+selectTab(tabId: number) {
+
+this.memberTabs.tabs[tabId].active = true;
+}
+
+selecttabqueryparam() {
+
+  this.actroute.queryParams.subscribe(params => {
+    const selectedTab = params['tab'] ;
+    this.memberTabs.tabs[selectedTab > 0 ? selectedTab : 0].active = true ;
 }
 
   // tslint:disable-next-line:eofline

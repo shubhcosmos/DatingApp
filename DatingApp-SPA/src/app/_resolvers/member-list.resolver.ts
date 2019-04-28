@@ -23,7 +23,7 @@ import { catchError } from 'rxjs/operators';
  return this.userService.getUsers(this.pageNumber , this.pageSize).pipe(catchError(err  => {
      this.alertify.error('Failed to get Users');
      this.router.navigate(['/home']);
-     return of (null);
+          return of (null);
  }
    ));
  }

@@ -130,6 +130,48 @@ return await context.Likes.FirstOrDefaultAsync(u=>u.LikerId==userId && u.LikeeId
 
       }
 
+        public async Task<Message> GetMessage(int id)
+        {
+            return await context.Messages.FirstOrDefaultAsync(m=>m.Id == id) ;
+        }
 
+        public async  Task<PagedList<Message>> GetMessagesForUser(MessageParams messageParams)
+        {
+           var messages = context.Messages.Include(m=>m.Sender).ThenInclude(u=>u.Photos)
+           .Include(m=>m.Recipient)
+           .ThenInclude(u=>u.Photos)
+           .AsQueryable();
+
+           switch(messageParams.MessageContainer)
+           {
+             case  "Inbox":
+                 messages = messages.Where(m=>m.RecipientId == messageParams.UserId && m.RecipientDeleted==false);
+                    break;
+
+                case  "Outbox":
+                 messages = messages.Where(m=>m.SenderId == messageParams.UserId && m.SenderDeleted==false);
+                    break;
+
+                default: 
+                  messages = messages.Where(m=>m.RecipientId == messageParams.UserId && m.IsRead==false && m.RecipientDeleted==false);
+                  break ;
+           }
+ messages =messages.OrderByDescending(m=>m.MessageSent) ;
+
+ return await    PagedList<Message>.CreateAsync(messages ,messageParams.pageNumber , messageParams.PageSize) ;
+          
+        }
+
+        public async Task<IEnumerable<Message>> GetMessageThread(int UserId, int recipientId)
+        {
+            var messages = await context.Messages.Include(m=>m.Sender).ThenInclude(u=>u.Photos)
+           .Include(m=>m.Recipient)
+           .ThenInclude(u=>u.Photos)
+           .Where(m=>m.RecipientId==UserId && m.RecipientDeleted==false && m.SenderId == recipientId 
+           || m.RecipientId == recipientId  && m.SenderId ==UserId &&m.SenderDeleted==false).OrderByDescending(m=>m.MessageSent)
+           .ToListAsync();
+
+           return  messages ;
+        }
     }
 }
