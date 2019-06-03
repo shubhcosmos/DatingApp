@@ -146,6 +146,7 @@ if (await _repo.SaveAll())
     var msg= _mapper.Map<MessageForCreationDto>(message);
     if(Mainphoto!=null)
     msg.senderPhotoUrl = Mainphoto.Url ;
+    
     return CreatedAtRoute("Getmessage" , new {id = message.Id} , msg);
 }
 

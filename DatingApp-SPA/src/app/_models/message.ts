@@ -9,7 +9,7 @@ recipientPhotoUrl: string ;
 content: string ;
 isRead: boolean ;
 dateRead: Date;
-messageSent: Date;
+messageSent: Date ;
 
 }
 
